@@ -5,32 +5,37 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-@Data
-public class ApprovalDTO {
+import java.time.LocalDateTime;
 
+@Data
+public class ApprovalDto {
     private Long id;
     private Boolean fullyApproved;
     private String level1Approval;
     private String level2Approval;
     private String level3Approval;
+    private String createdBy;
+    private LocalDateTime createdDate;
+    private String lastModifiedBy;
+    private LocalDateTime lastModifiedDate;
 
-
-    private DesignDTO design;
-
-    public ApprovalDTO(Approval approval) {
+    // constructor
+    public ApprovalDto(Approval approval) {
         this.id = approval.getId();
         this.fullyApproved = approval.getFullyApproved();
         this.level1Approval = approval.getLevel1Approval();
         this.level2Approval = approval.getLevel2Approval();
         this.level3Approval = approval.getLevel3Approval();
-
-        if (approval.getDesign() != null) {
-            this.design = new DesignDTO(approval.getDesign());
-        }
+//        this.createdBy = approval.getCreatedBy();
+//        this.createdDate = approval.getCreatedDate();
+//        this.lastModifiedBy = approval.getLastModifiedBy();
+//        this.lastModifiedDate = approval.getLastModifiedDate();
     }
 
     // getters and setters
+    // ...
 }
+
 
 //public class ApprovalDTO {
 //

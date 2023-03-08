@@ -1,8 +1,7 @@
 
 package com.example.adam.controller;
 
-import com.example.adam.dto.ApprovalDTO;
-import com.example.adam.dto.DesignDTO;
+
 import com.example.adam.model.Approval;
 import com.example.adam.model.Design;
 import com.example.adam.repository.DesignRepository;

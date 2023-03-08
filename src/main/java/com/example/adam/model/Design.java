@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "designs")
 
 
-public class Design {
+public class Design extends AuditModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

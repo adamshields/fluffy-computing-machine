@@ -1,7 +1,6 @@
 package com.example.adam.service;
 
-import com.example.adam.dto.ApprovalDTO;
-import com.example.adam.dto.DesignDTO;
+
 import com.example.adam.model.Approval;
 import com.example.adam.model.Design;
 import com.example.adam.model.User;
@@ -27,6 +26,7 @@ public class ApprovalService {
 
 
     public List<Approval> getAllApprovals(){
+
         return approvalRepository.findAll();
     }
 

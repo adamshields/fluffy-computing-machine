@@ -60,12 +60,25 @@ public class DesignService {
 
         return design;
     }
-
-
     public List<Design> getAllDesigns() {
-
-        return designRepository.findAll();
+        List<Design> designs = designRepository.findAll();
+        for (Design design : designs) {
+            Approval approval = design.getApproval();
+            if (approval != null) {
+                // fetch audit fields for Approval object
+                approval.getCreatedDate();
+                approval.getCreatedBy();
+                approval.getLastModifiedDate();
+                approval.getLastModifiedBy();
+            }
+        }
+        return designs;
     }
+
+//    public List<Design> getAllDesigns() {
+//
+//        return designRepository.findAll();
+//    }
 
     public Design createDesign(Design design) {
 
