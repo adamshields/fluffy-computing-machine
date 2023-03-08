@@ -3,6 +3,10 @@ spring:
     username: serverdbadmin
     password: 12345
     url: jdbc:mysql://localhost:3306/serverdb
+#    initialization-mode: always
+#    data: data-mysql.sql
+#    generate-unique-name: false
+
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -10,8 +14,13 @@ spring:
       dialect: org.hibernate.dialect.MySQL8Dialect
       format_sql: true
     show-sql: true
-#  profiles:
-#    active: dev
   h2:
     console:
       enabled: false
+
+
+
+## Run SQL script to create schema and tables
+#spring.datasource.initialization-mode: always
+#spring.datasource.data: classpath:data.sql
+#spring.datasource.generate-unique-name: false
