@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class ApprovalDto {
-    private Long id;
+    private Integer id;
     private Boolean fullyApproved;
     private String level1Approval;
     private String level2Approval;

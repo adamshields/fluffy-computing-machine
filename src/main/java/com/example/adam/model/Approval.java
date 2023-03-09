@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Approval extends AuditModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "fully_approved", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean fullyApproved;

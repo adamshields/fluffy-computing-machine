@@ -15,14 +15,14 @@ import java.util.List;
 public class Design extends AuditModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
 
     @Column(
             name = "design_version",
             length = 300,
-            columnDefinition = "TEXT",
-            nullable = false
+            columnDefinition = "TEXT"
+//            nullable = false
     )
     private String designVersion;
 
@@ -30,8 +30,8 @@ public class Design extends AuditModel{
     @Column(
             name = "design_name",
             length = 300,
-            columnDefinition = "TEXT",
-            nullable = false
+            columnDefinition = "TEXT"
+//            nullable = false
     )
     private String designName;
 

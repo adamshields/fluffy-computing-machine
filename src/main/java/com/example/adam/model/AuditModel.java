@@ -12,7 +12,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-@Data
+//@Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class AuditModel {

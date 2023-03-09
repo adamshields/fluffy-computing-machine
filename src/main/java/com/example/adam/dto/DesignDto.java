@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 public class DesignDto {
-    private Long id;
+    private Integer id;
     private String designVersion;
     private String designName;
     private Boolean isEditable;

@@ -16,7 +16,7 @@ public class DesignController {
     private DesignService designService;
 
     @GetMapping("/designs/{designId}")
-    public ResponseEntity<Design> getDesignById(@PathVariable Long designId) {
+    public ResponseEntity<Design> getDesignById(@PathVariable Integer designId) {
         Design design = designService.getDesignById(designId);
         return ResponseEntity.ok(design);
     }
@@ -27,7 +27,7 @@ public class DesignController {
         return ResponseEntity.ok(designs);
     }
     @PutMapping("/designs/{id}/approve/{level}")
-    public Design approveDesign(@PathVariable Long id, @PathVariable int level) {
+    public Design approveDesign(@PathVariable Integer id, @PathVariable int level) {
         return designService.approveDesign(id, level);
     }
 

@@ -5,8 +5,10 @@ import com.example.adam.model.Design;
 import com.example.adam.repository.ApprovalRepository;
 import com.example.adam.repository.DesignRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
+//import org.springframework.security.core.Authentication;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -20,13 +22,18 @@ public class DesignService {
     @Autowired
     private DesignRepository designRepository;
 
-    public Design getDesignById(Long designId) {
+    public Design getDesignById(Integer designId) {
         return designRepository.findById(designId)
                 .orElseThrow(() -> new EntityNotFoundException("Design not found with id: " + designId));
     }
 
 
-    public Design approveDesign(Long id, int level) {
+    public Design approveDesign(Integer id, int level) {
+
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String lastModifiedBy = authentication.getName();
+        String lastModifiedBy = "TestName";
+
         Design design = designRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Design not found with id " + id));
         Approval approval = design.getApproval();
@@ -42,13 +49,13 @@ public class DesignService {
 
         switch (level) {
             case 1:
-                approval.setLevel1Approval("approved");
+                approval.setLevel1Approval("approved-" + lastModifiedBy);
                 break;
             case 2:
-                approval.setLevel2Approval("approved");
+                approval.setLevel2Approval("approved-" + lastModifiedBy);
                 break;
             case 3:
-                approval.setLevel3Approval("approved");
+                approval.setLevel3Approval("approved-" + lastModifiedBy);
                 approval.setFullyApproved(true);
                 break;
             default:
@@ -62,16 +69,16 @@ public class DesignService {
     }
     public List<Design> getAllDesigns() {
         List<Design> designs = designRepository.findAll();
-        for (Design design : designs) {
-            Approval approval = design.getApproval();
-            if (approval != null) {
-                // fetch audit fields for Approval object
-                approval.getCreatedDate();
-                approval.getCreatedBy();
-                approval.getLastModifiedDate();
-                approval.getLastModifiedBy();
-            }
-        }
+//        for (Design design : designs) {
+//            Approval approval = design.getApproval();
+//            if (approval != null) {
+//                // fetch audit fields for Approval object
+//                approval.getCreatedDate();
+//                approval.getCreatedBy();
+//                approval.getLastModifiedDate();
+//                approval.getLastModifiedBy();
+//            }
+//        }
         return designs;
     }
 
@@ -90,7 +97,7 @@ public class DesignService {
         designRepository.save(design);
     }
 
-    public void deleteDesignById(Long designId) {
+    public void deleteDesignById(Integer designId) {
 
         designRepository.deleteById(designId);
     }
