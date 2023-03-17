@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface DesignRepository extends JpaRepository<Design, Integer> {
+public interface DesignRepository extends JpaRepository<Design, Long> {
 
 
 }

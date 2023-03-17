@@ -1,8 +1,10 @@
 package com.example.adam.model;
 
+import com.example.adam.utils.SlugGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,17 +14,16 @@ import java.util.List;
 @Table(name = "designs")
 
 
-public class Design extends AuditModel{
+public class Design extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
 
     @Column(
             name = "design_version",
             length = 300,
             columnDefinition = "TEXT"
-//            nullable = false
     )
     private String designVersion;
 
@@ -31,10 +32,12 @@ public class Design extends AuditModel{
             name = "design_name",
             length = 300,
             columnDefinition = "TEXT"
-//            nullable = false
     )
     private String designName;
 
+//    @Column(name = "slug", unique = true)
+
+//    private String slug;
     @Column(
             name = "is_editable",
             columnDefinition = "BOOLEAN DEFAULT false",
@@ -43,9 +46,24 @@ public class Design extends AuditModel{
     private Boolean isEditable;
 
 
-     // Ties to Approvals
-    @OneToOne
-    @JoinColumn(name = "approval_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_design_approval"))
-    @JsonManagedReference
-    private Approval approval;
+    // Ties to Approvals
+    @OneToMany(mappedBy = "design", cascade = CascadeType.ALL)
+    private List<Approval> approvals;
+
+
+//    @Transient
+//    private SlugGenerator slugGenerator;
+//
+//    @PrePersist
+//    @PreUpdate
+//    private void generateSlug() {
+//        slug = slugGenerator.generateSlug(designName);
+//    }
 }
+
+
+
+//    @OneToOne
+//    @JoinColumn(name = "approval_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_design_approval"))
+//    @JsonManagedReference
+//    private Approval approval;

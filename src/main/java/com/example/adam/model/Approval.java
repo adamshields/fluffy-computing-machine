@@ -2,33 +2,37 @@ package com.example.adam.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "approvals")
-public class Approval extends AuditModel{
+public class Approval {
+//public class Approval extends AuditModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(name = "fully_approved", columnDefinition = "BOOLEAN DEFAULT false")
-    private Boolean fullyApproved;
+    private String approvalLevel;
 
-    @Column(name = "level_1_approval", length = 300, nullable = false)
-    private String level1Approval;
+    private String approver;
 
-    @Column(name = "level_2_approval", length = 300, nullable = false)
-    private String level2Approval;
+    private Date approvedDate;
 
-    @Column(name = "level_3_approval", length = 300, nullable = false)
-    private String level3Approval;
-
-    // Reverse Side for Design
-    @OneToOne(mappedBy = "approval")
-    @JsonBackReference(value="approval")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "design_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_design_approvals"))
     private Design design;
 
 }
+//    @Column(name = "fully_approved", columnDefinition = "BOOLEAN DEFAULT false")
+//    private Boolean fullyApproved;
+//    @Column(name = "approval_level", length = 300, nullable = false)
+//    private String approval_level;
+//
+//    // Reverse Side for Design
+//    @OneToOne(mappedBy = "approval")
+//    @JsonBackReference(value="approval")
+//    private Design design;
 
 //    public void approve(User user, int level) {
 //        switch (level) {
