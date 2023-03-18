@@ -26,39 +26,40 @@ public class DesignService {
 
     @Autowired
     private ModelMapper modelMapper;
+}
 
-    public DesignDTO getDesignById(Long designId) {
-        Design design = designRepository.findById(designId)
-                .orElseThrow(() -> new NotFoundException("Design not found with id " + designId));
-        List<ApprovalDTO> approvalDTOs = design.getApprovals().stream()
-                .map(approval -> modelMapper.map(approval, ApprovalDTO.class))
-                .collect(Collectors.toList());
-        DesignDTO designDTO = modelMapper.map(design, DesignDTO.class);
-        designDTO.setApprovals(approvalDTOs);
-        return designDTO;
-    }
+//    public DesignDTO getDesignById(Long designId) {
+//        Design design = designRepository.findById(designId)
+//                .orElseThrow(() -> new NotFoundException("Design not found with id " + designId));
+//        List<ApprovalDTO> approvalDTOs = design.getApprovals().stream()
+//                .map(approval -> modelMapper.map(approval, ApprovalDTO.class))
+//                .collect(Collectors.toList());
+//        DesignDTO designDTO = modelMapper.map(design, DesignDTO.class);
+//        designDTO.setApprovals(approvalDTOs);
+//        return designDTO;
+//    }
 
-    public DesignDTO addApproval(Long designId, ApprovalDTO approvalDTO) {
-        Design design = designRepository.findById(designId)
-                .orElseThrow(() -> new NotFoundException("Design not found with id " + designId));
-        Approval approval = modelMapper.map(approvalDTO, Approval.class);
-        approval.setDesign(design);
-        design.getApprovals().add(approval);
-        designRepository.save(design);
-        return modelMapper.map(design, DesignDTO.class);
-    }
+//    public DesignDTO addApproval(Long designId, ApprovalDTO approvalDTO) {
+//        Design design = designRepository.findById(designId)
+//                .orElseThrow(() -> new NotFoundException("Design not found with id " + designId));
+//        Approval approval = modelMapper.map(approvalDTO, Approval.class);
+//        approval.setDesign(design);
+//        design.getApprovals().add(approval);
+//        designRepository.save(design);
+//        return modelMapper.map(design, DesignDTO.class);
+//    }
 
 //    public List<Design> getAllDesigns() {
 //        return designRepository.findAll();
 //    }
 
-    public List<DesignDTO> getAllDesigns() {
-        List<Design> designs = designRepository.findAll();
-        return designs.stream()
-                .map(design -> modelMapper.map(design, DesignDTO.class))
-                .collect(Collectors.toList());
-    }
-}
+//    public List<DesignDTO> getAllDesigns() {
+//        List<Design> designs = designRepository.findAll();
+//        return designs.stream()
+//                .map(design -> modelMapper.map(design, DesignDTO.class))
+//                .collect(Collectors.toList());
+//    }
+//}
 
 
 //    public Design approveDesign(Integer id, int level) {

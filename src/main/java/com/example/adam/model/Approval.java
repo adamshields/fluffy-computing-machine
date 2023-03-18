@@ -6,22 +6,22 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "approvals")
+@Table(name = "old_approvals")
 public class Approval {
 //public class Approval extends AuditModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    private String approvalLevel;
+//    private String approvalLevel;
+//
+//    private String approver;
+//
+//    private Date approvedDate;
 
-    private String approver;
-
-    private Date approvedDate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "design_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_design_approvals"))
-    private Design design;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "design_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_design_approvals"))
+//    private Design design;
 
 }
 //    @Column(name = "fully_approved", columnDefinition = "BOOLEAN DEFAULT false")

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "designs")
+@Table(name = "foo_designs")
 
 
 public class Design extends AuditModel {
@@ -20,35 +20,35 @@ public class Design extends AuditModel {
     private Long id;
 
 
-    @Column(
-            name = "design_version",
-            length = 300,
-            columnDefinition = "TEXT"
-    )
-    private String designVersion;
-
-
-    @Column(
-            name = "design_name",
-            length = 300,
-            columnDefinition = "TEXT"
-    )
-    private String designName;
-
-//    @Column(name = "slug", unique = true)
-
-//    private String slug;
-    @Column(
-            name = "is_editable",
-            columnDefinition = "BOOLEAN DEFAULT false",
-            nullable = false
-    )
-    private Boolean isEditable;
-
-
-    // Ties to Approvals
-    @OneToMany(mappedBy = "design", cascade = CascadeType.ALL)
-    private List<Approval> approvals;
+//    @Column(
+//            name = "design_version",
+//            length = 300,
+//            columnDefinition = "TEXT"
+//    )
+//    private String designVersion;
+//
+//
+//    @Column(
+//            name = "design_name",
+//            length = 300,
+//            columnDefinition = "TEXT"
+//    )
+//    private String designName;
+//
+////    @Column(name = "slug", unique = true)
+//
+////    private String slug;
+//    @Column(
+//            name = "is_editable",
+//            columnDefinition = "BOOLEAN DEFAULT false",
+//            nullable = false
+//    )
+//    private Boolean isEditable;
+//
+//
+//    // Ties to Approvals
+//    @OneToMany(mappedBy = "design", cascade = CascadeType.ALL)
+//    private List<Approval> approvals;
 
 
 //    @Transient
