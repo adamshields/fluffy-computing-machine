@@ -27,6 +27,6 @@ public class DesignsModel extends AuditModel {
     private Integer oldDesignId;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", insertable = true, updatable = true)
+    @JoinColumn(name = "design_id", referencedColumnName = "designId", insertable = true, updatable = true, foreignKey = @ForeignKey(name = "fk_design_approvals_design_id"))
     private Set<DesignApproval> designApprovals;
 }
