@@ -94,6 +94,10 @@ public class DesignController {
                 return CustomAPIResponse.generate500Response("The server was unable to process your request.",
                         "Error in " + className + ".updateDesign (Copy)");
             }
+
+            // Add approvals to existing design
+            existingDesign.setDesignApprovals(newDesigns.getDesignApprovals());
+
             DesignsModel update = designsRepo.save(existingDesign);
             if (update.getDesignId() == null) {
                 log.debug("Cannot save design to the database.");
