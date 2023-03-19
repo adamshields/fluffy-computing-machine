@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+//import org.springframework.security.core.context.SecurityContextHolder;
 
 @Data
 @Entity
@@ -29,6 +30,10 @@ public class DesignApproval extends AuditModel {
     @PrePersist
     public void prePersist() {
         this.approvedDate = LocalDateTime.now();
+        String approverUserNameFaker = "adam";
+        this.approver = approverUserNameFaker;
+//        this.approver = SecurityContextHolder.getContext().getAuthentication().getName();
+
         // You'll need to set the approver field based on the currently authenticated user
         // You could do this in a service method that calls the save() method on the repository
         // or use Spring Security's @AuthenticationPrincipal annotation to inject the currently
