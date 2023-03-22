@@ -1,5 +1,5 @@
 package com.example.adam.repository;
-import com.example.adam.model.Design;
+import com.example.adam.tbd.Design;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

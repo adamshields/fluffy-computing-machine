@@ -1,20 +1,16 @@
-package com.example.adam.model;
+package com.example.adam.tbd;
 
-import com.example.adam.utils.SlugGenerator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.example.adam.utils.AuditModel;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
 @Table(name = "foo_designs")
 
 
-public class Design extends AuditModel {
+public class DesignOLD extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

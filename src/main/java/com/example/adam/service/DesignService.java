@@ -1,22 +1,12 @@
 package com.example.adam.service;
 
-import com.example.adam.dto.ApprovalDTO;
-import com.example.adam.dto.DesignDTO;
-import com.example.adam.model.Approval;
-import com.example.adam.model.Design;
-import com.example.adam.repository.ApprovalRepository;
 import com.example.adam.repository.DesignRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 //import org.springframework.security.core.Authentication;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DesignService {

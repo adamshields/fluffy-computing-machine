@@ -2,17 +2,12 @@
 package com.example.adam.controller;
 
 
-import com.example.adam.model.Approval;
-import com.example.adam.model.Design;
 import com.example.adam.repository.DesignRepository;
-import com.example.adam.service.ApprovalService;
+import com.example.adam.tbd.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityNotFoundException;
-import java.util.List;
 
 @RestController
 @RequestMapping("v1")
@@ -54,17 +49,17 @@ public class ApprovalController {
 //        return new ResponseEntity<>(HttpStatus.CREATED);
 //    }
 
-    @GetMapping("/approvals")
-    public ResponseEntity<?> getApprovals() {
-        return new ResponseEntity<>(approvalService.getAllApprovals(), HttpStatus.OK);
-    }
+//    @GetMapping("/approvals")
+//    public ResponseEntity<?> getApprovals() {
+//        return new ResponseEntity<>(approvalService.getAllApprovals(), HttpStatus.OK);
+//    }
 }
 
 //package com.example.adam.controller;
 //
-//import com.example.adam.model.Approval;
-//import com.example.adam.model.ApprovalRequest;
-//import com.example.adam.service.ApprovalService;
+//import com.example.adam.tbd.Approval;
+//import com.example.adam.tbd.ApprovalRequest;
+//import com.example.adam.tbd.ApprovalService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.*;

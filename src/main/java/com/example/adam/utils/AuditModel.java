@@ -1,4 +1,4 @@
-package com.example.adam.model;
+package com.example.adam.utils;
 
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;

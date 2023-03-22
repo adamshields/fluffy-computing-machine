@@ -1,11 +1,7 @@
 package com.example.adam.dto;
 
-import com.example.adam.model.Approval;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data

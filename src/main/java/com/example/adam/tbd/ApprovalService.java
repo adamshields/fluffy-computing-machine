@@ -1,34 +1,30 @@
-package com.example.adam.service;
+package com.example.adam.tbd;
 
 
 import com.example.adam.model.Approval;
-import com.example.adam.model.Design;
-import com.example.adam.model.User;
-import com.example.adam.repository.ApprovalRepository;
 import com.example.adam.repository.DesignRepository;
+import com.example.adam.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 @Service
 public class ApprovalService {
 
-    @Autowired
-    private ApprovalRepository approvalRepository;
+//    @Autowired
+//    private ApprovalRepository approvalRepository;
+//
+//    @Autowired
+//    private UserService userService;
+//
+//    @Autowired
+//    private DesignRepository designRepository;
 
-    @Autowired
-    private UserService userService;
 
-    @Autowired
-    private DesignRepository designRepository;
-
-
-    public List<Approval> getAllApprovals(){
-
-        return approvalRepository.findAll();
-    }
+//    public List<Approval> getAllApprovals(){
+//
+//        return approvalRepository.findAll();
+//    }
 
 //    public ApprovalDTO createApproval(ApprovalDTO approvalDTO) {
 //        Approval approval = new Approval();
@@ -185,10 +181,10 @@ public class ApprovalService {
 //
 ////package com.example.adam.service;
 ////
-////import com.example.adam.model.Approval;
-////import com.example.adam.model.ApprovalRequest;
-////import com.example.adam.model.Design;
-////import com.example.adam.repository.ApprovalRepository;
+////import com.example.adam.tbd.Approval;
+////import com.example.adam.tbd.ApprovalRequest;
+////import com.example.adam.tbd.Design;
+////import com.example.adam.tbd.ApprovalRepository;
 ////import com.example.adam.repository.DesignRepository;
 ////import org.springframework.beans.factory.annotation.Autowired;
 ////import org.springframework.stereotype.Service;

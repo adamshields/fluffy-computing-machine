@@ -96,7 +96,7 @@ public class DesignController {
             }
 
             // Add approvals to existing design
-            existingDesign.setDesignApprovals(newDesigns.getDesignApprovals());
+            existingDesign.setApprovals(newDesigns.getApprovals());
 
             DesignsModel update = designsRepo.save(existingDesign);
             if (update.getDesignId() == null) {

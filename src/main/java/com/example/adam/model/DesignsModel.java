@@ -1,9 +1,9 @@
 package com.example.adam.model;
 
+import com.example.adam.utils.AuditModel;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -34,5 +34,5 @@ public class DesignsModel extends AuditModel {
             updatable = true,
             foreignKey = @ForeignKey(name = "fk_design_approvals_design_id")
     )
-    private Set<DesignApproval> designApprovals;
+    private Set<Approval> approvals;
 }

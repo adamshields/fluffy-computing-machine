@@ -1,55 +1,42 @@
 package com.example.adam.model;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import com.example.adam.utils.AuditModel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+//import org.springframework.security.core.context.SecurityContextHolder;
 
 @Data
 @Entity
-@Table(name = "old_approvals")
-public class Approval {
-//public class Approval extends AuditModel{
+@Table(name = "approvals")
+public class Approval extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-//    private String approvalLevel;
-//
-//    private String approver;
-//
-//    private Date approvedDate;
+    private String approvalLevel;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "design_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_design_approvals"))
-//    private Design design;
+    @Column(name = "approver")
+    private String approver;
 
-}
-//    @Column(name = "fully_approved", columnDefinition = "BOOLEAN DEFAULT false")
-//    private Boolean fullyApproved;
-//    @Column(name = "approval_level", length = 300, nullable = false)
-//    private String approval_level;
+    @Column(name = "approved_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime approvedDate;
+
+    // Constructor, getters, and setters
+
+//    @PrePersist
+//    public void prePersist() {
+//        this.approvedDate = LocalDateTime.now();
+//        String approverUserNameFaker = "adam";
+//        this.approver = approverUserNameFaker;
+////        this.approver = SecurityContextHolder.getContext().getAuthentication().getName();
 //
-//    // Reverse Side for Design
-//    @OneToOne(mappedBy = "approval")
-//    @JsonBackReference(value="approval")
-//    private Design design;
-
-//    public void approve(User user, int level) {
-//        switch (level) {
-//            case 1:
-//                setLevel1Approval("Approved at level 1");
-//                setLevel1Approval(user.getEmployeeId());
-//                break;
-//            case 2:
-//                setLevel2Approval("Approved at level 2");
-//                setLevel2Approval(user.getEmployeeId());
-//                break;
-//            case 3:
-//                setLevel3Approval("Approved at level 3");
-//                setLevel3Approval(user.getEmployeeId());
-//                setFullyApproved(true);
-//                break;
-//            default:
-//                throw new IllegalArgumentException("Invalid approval level: " + level);
-//        }
+//        // You'll need to set the approver field based on the currently authenticated user
+//        // You could do this in a service method that calls the save() method on the repository
+//        // or use Spring Security's @AuthenticationPrincipal annotation to inject the currently
+//        // authenticated user into the controller method that calls the service method.
 //    }
+}
