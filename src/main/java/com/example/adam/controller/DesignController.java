@@ -1,7 +1,7 @@
 package com.example.adam.controller;
 
 import com.example.adam.model.DesignsModel;
-import com.example.adam.repository.DesignsRepo;
+import com.example.adam.repository.DesignsRepository;
 import com.example.adam.service.DesignRevisioningService;
 import com.example.adam.service.DesignService;
 import com.example.adam.utils.CustomAPIResponse;
@@ -20,7 +20,7 @@ import java.util.List;
 public class DesignController {
 
     @Autowired
-    private DesignsRepo designsRepo;
+    private DesignsRepository designsRepository;
     @Autowired
     private DesignRevisioningService designRevSvc;
     @Autowired
@@ -33,9 +33,9 @@ public class DesignController {
         try {
             List<DesignsModel> designs;
             if (appId != null) {
-                designs = designsRepo.findByAppId(appId);
+                designs = designsRepository.findByAppId(appId);
             } else {
-                designs = designsRepo.findAll();
+                designs = designsRepository.findAll();
             }
             if (designs.isEmpty()) {
                 log.debug("No designs found in getAllDesignsController");
@@ -79,8 +79,8 @@ public class DesignController {
 
         try {
             DesignsModel existingDesign;
-            if (designsRepo.existsById(id)) {
-                existingDesign = designsRepo.findById(id).get();
+            if (designsRepository.existsById(id)) {
+                existingDesign = designsRepository.findById(id).get();
             } else {
                 log.debug("Design does not exist and cannot be updated.");
                 return CustomAPIResponse.generate204Response("No designs match your criteria",
@@ -98,7 +98,7 @@ public class DesignController {
             // Add approvals to existing design
             existingDesign.setApprovals(newDesigns.getApprovals());
 
-            DesignsModel update = designsRepo.save(existingDesign);
+            DesignsModel update = designsRepository.save(existingDesign);
             if (update.getDesignId() == null) {
                 log.debug("Cannot save design to the database.");
                 return CustomAPIResponse.generate500Response(

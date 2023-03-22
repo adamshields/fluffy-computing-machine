@@ -1,7 +1,7 @@
 package com.example.adam.service;
 
 import com.example.adam.model.DesignsModel;
-import com.example.adam.repository.DesignsRepo;
+import com.example.adam.repository.DesignsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 public class DesignRevisioningService {
 
     @Autowired
-    private DesignsRepo designsRepo;
+    private DesignsRepository designsRepository;
 
     public DesignsModel createNewDesignRevision(DesignsModel design){
 
-        DesignsModel newDesign = designsRepo.save(design);
+        DesignsModel newDesign = designsRepository.save(design);
         return newDesign;
     }
 
     private boolean checkAppIdExistence(Integer appId) {
-        return designsRepo.checkAppIdExists().contains(appId);
+        return designsRepository.checkAppIdExists().contains(appId);
     }
 
 //    private String  getPresentVersion(Integer appId){
@@ -28,7 +28,7 @@ public class DesignRevisioningService {
 //    }
 
     private DesignsModel getPresentVersion(Integer appId) {
-        return designsRepo.getPresentDesign(appId);
+        return designsRepository.getPresentDesign(appId);
     }
 
     public DesignsModel createNewRevision(DesignsModel design) {
@@ -50,7 +50,7 @@ public class DesignRevisioningService {
         }
 
         // save design after object has been modified
-        rev = designsRepo.save(design);
+        rev = designsRepository.save(design);
 
         return rev;
     }

@@ -2,7 +2,7 @@ package com.example.adam.populater;
 
 
 import com.example.adam.model.DesignsModel;
-import com.example.adam.repository.DesignsRepo;
+import com.example.adam.repository.DesignsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 public class DatabaseInitializer {
 
     @Autowired
-    private DesignsRepo designsRepo;
+    private DesignsRepository designsRepository;
 
     @PostConstruct
     public void initialize() {
@@ -23,7 +23,7 @@ public class DatabaseInitializer {
             designsModel.setDesignName("Design " + i);
             designsModel.setDesignBase("Base " + i);
             designsModel.setIsEditable(true);
-            designsRepo.save(designsModel);
+            designsRepository.save(designsModel);
         }
     }
 }

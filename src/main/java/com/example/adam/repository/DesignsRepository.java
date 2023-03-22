@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface DesignsRepo  extends JpaRepository<DesignsModel, Integer> {
+public interface DesignsRepository extends JpaRepository<DesignsModel, Integer> {
 
 //    @Query(value = "SELECT design_id, design_version FROM design_revisions WHERE design_status =\"Present\" AND app_id = :appId", nativeQuery = true)
 //    String getPresentDesign(@Param("appId") Integer appId);

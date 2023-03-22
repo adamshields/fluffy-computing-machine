@@ -2,7 +2,7 @@
 package com.example.adam.controller;
 
 
-import com.example.adam.repository.DesignRepository;
+//import com.example.adam.repository.DesignRepository;
 import com.example.adam.tbd.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,8 @@ public class ApprovalController {
     @Autowired
     private ApprovalService approvalService;
 
-    @Autowired
-    private DesignRepository designRepository;
+//    @Autowired
+//    private DesignRepository designRepository;
 
 //    @GetMapping("/approvalsDTO")
 //    public ResponseEntity<List<ApprovalDTO>> getApprovalsDto() {
