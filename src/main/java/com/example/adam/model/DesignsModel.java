@@ -20,6 +20,8 @@ public class DesignsModel extends AuditModel {
 
     private String designName;
 
+    private String designStatus = "Future";
+
     private String designBase;
 
     private Boolean isEditable;

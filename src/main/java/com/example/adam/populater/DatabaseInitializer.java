@@ -21,6 +21,7 @@ public class DatabaseInitializer {
             designsModel.setAppId(i);
             designsModel.setDesignVersion("1.0");
             designsModel.setDesignName("Design " + i);
+            designsModel.getDesignStatus();
             designsModel.setDesignBase("Base " + i);
             designsModel.setIsEditable(true);
             designsRepository.save(designsModel);
