@@ -1,61 +1,63 @@
 package com.example.adam.model;
 
-import javax.persistence.*;
-import java.util.List;
-import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.time.LocalDateTime;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-@Entity
-public class Resource {
+@MappedSuperclass
+public abstract class Resource {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String type;
+    private String id;
 
-    @OneToMany(mappedBy = "resource", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("resource") // ignore the resource field in the Attribute object during serialization
-    private List<Attribute> attributes;
+    private String createdBy;
 
-    private Integer activeRecord;
-
-    // Required by JPA
-    protected Resource() {}
-
-    public Resource(String type, List<Attribute> attributes, Integer activeRecord) {
-        this.type = type;
-        this.attributes = attributes;
-        this.activeRecord = activeRecord;
-    }
-
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
-    public List<Attribute> getAttributes() {
-        return attributes;
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
-    public void setAttributes(List<Attribute> attributes) {
-        this.attributes = attributes;
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public Integer getActiveRecord() {
-        return activeRecord;
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
     }
 
-    public void setActiveRecord(Integer activeRecord) {
-        this.activeRecord = activeRecord;
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
+
+    public LocalDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    private LocalDateTime createdDate;
+    private String lastModifiedBy;
+    private LocalDateTime lastModifiedDate;
+
+    public abstract void activeRecord();
+
+    // Getters and setters for the fields
 }
