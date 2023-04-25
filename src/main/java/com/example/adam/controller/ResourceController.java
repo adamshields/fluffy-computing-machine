@@ -9,10 +9,10 @@ import com.example.adam.repository.ServerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("v1/api/resource")
@@ -50,4 +50,110 @@ public class ResourceController {
         serverRepository.save(newServer);
         return new ResponseEntity<>(newServer, HttpStatus.CREATED);
     }
+
+    @GetMapping("/{resourceType}")
+    public ResponseEntity<?> getAll(@PathVariable String resourceType) {
+        switch (resourceType.toLowerCase()) {
+            case "san":
+                return ResponseEntity.ok(sanRepository.findAll());
+            case "server":
+                return ResponseEntity.ok(serverRepository.findAll());
+            default:
+                return ResponseEntity.badRequest().body("Invalid resource type");
+        }
+    }
+
+
+    @GetMapping("/{resourceType}/{id}")
+    public ResponseEntity<?> getById(@PathVariable String resourceType, @PathVariable Long id) {
+        Optional<?> resource;
+        switch (resourceType.toLowerCase()) {
+            case "san":
+                resource = sanRepository.findById(id);
+                break;
+            case "server":
+                resource = serverRepository.findById(id);
+                break;
+            default:
+                return ResponseEntity.badRequest().body("Invalid resource type");
+        }
+
+        return resource.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{resourceType}/{id}")
+    public ResponseEntity<?> delete(@PathVariable String resourceType, @PathVariable Long id) {
+        switch (resourceType.toLowerCase()) {
+            case "san":
+                sanRepository.deleteById(id);
+                break;
+            case "server":
+                serverRepository.deleteById(id);
+                break;
+            default:
+                return ResponseEntity.badRequest().body("Invalid resource type");
+        }
+        return ResponseEntity.noContent().build();
+    }
+    @PutMapping("/{resourceType}/{id}")
+    public ResponseEntity<?> update(@PathVariable String resourceType, @PathVariable Long id, @RequestBody Resource updatedResource) {
+        switch (resourceType.toLowerCase()) {
+            case "san":
+                return updateSAN(id, (SAN) updatedResource);
+            case "server":
+                return updateServer(id, (Server) updatedResource);
+            //case "ltm":
+            //    return updateLTM(id, (LTM) updatedResource);
+            default:
+                return ResponseEntity.badRequest().body("Invalid resource type");
+        }
+    }
+
+    private ResponseEntity<SAN> updateSAN(Long id, SAN updatedSAN) {
+        Optional<SAN> existingSAN = sanRepository.findById(id);
+        if (existingSAN.isPresent()) {
+            SAN san = existingSAN.get();
+            // Update properties
+            san.setFriendlyName(updatedSAN.getFriendlyName());
+            san.setDiskSpeed(updatedSAN.getDiskSpeed());
+            san.setFqdn(updatedSAN.getFqdn());
+            san.setActiveRecord(updatedSAN.isActiveRecord());
+
+            SAN savedSAN = sanRepository.save(san);
+            return ResponseEntity.ok(savedSAN);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    private ResponseEntity<Server> updateServer(Long id, Server updatedServer) {
+        Optional<Server> existingServer = serverRepository.findById(id);
+        if (existingServer.isPresent()) {
+            Server server = existingServer.get();
+            // Update properties
+            server.setHostname(updatedServer.getHostname());
+            server.setIpAddress(updatedServer.getIpAddress());
+            server.setFqdn(updatedServer.getFqdn());
+            server.setActiveRecord(updatedServer.isActiveRecord());
+
+            Server savedServer = serverRepository.save(server);
+            return ResponseEntity.ok(savedServer);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    //private ResponseEntity<LTM> updateLTM(Long id, LTM updatedLTM) {
+    //    Optional<LTM> existingLTM = ltmRepository.findById(id);
+    //    if (existingLTM.isPresent()) {
+    //        LTM ltm = existingLTM.get();
+    //        // Update properties
+    //        // Assuming you have LTM-specific properties
+    //        // ltm.setProperty(updatedLTM.getProperty());
+    //        ltm.setActiveRecord(updatedLTM.isActiveRecord());
+    //
+    //        LTM savedLTM = ltmRepository.save(ltm);
+    //        return ResponseEntity.ok(savedLTM);
+    //    }
+    //    return ResponseEntity.notFound().build();
+    //}
+
 }
