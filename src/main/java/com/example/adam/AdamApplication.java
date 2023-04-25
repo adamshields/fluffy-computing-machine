@@ -21,7 +21,7 @@ public class AdamApplication {
 //public class AdamApplication implements CommandLineRunner {
 //
 //	@Autowired
-//	private ResourceFactoryConfigurer resourceFactoryConfigurer;
+//	private ResourceFactoryRegistry resourceFactoryConfigurer;
 //
 //	public static void main(String[] args) {
 //		SpringApplication.run(AdamApplication.class, args);
