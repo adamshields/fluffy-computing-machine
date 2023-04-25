@@ -13,3 +13,14 @@ spring:
   h2:
     console:
       enabled: false
+
+logging:
+  level:
+    org:
+      springframework:
+#        web: debug
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+        sql: debug

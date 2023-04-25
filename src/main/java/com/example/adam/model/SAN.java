@@ -1,20 +1,38 @@
 package com.example.adam.model;
-
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Entity
 public class SAN extends Resource {
 
-    public SAN() {
+    private String friendlyName;
+
+    private String diskSpeed;
+
+    private String fqdn;
+
+
+    public String getFriendlyName() {
+        return friendlyName;
     }
 
-    public SAN(String id) {
-        setId(id);
+    public void setFriendlyName(String friendlyName) {
+        this.friendlyName = friendlyName;
     }
 
-    @Override
-    public void activeRecord() {
-        // Implement the logic for activating the SAN
+    public String getDiskSpeed() {
+        return diskSpeed;
     }
+
+    public void setDiskSpeed(String diskSpeed) {
+        this.diskSpeed = diskSpeed;
+    }
+
+    public String getFqdn() {
+        return fqdn;
+    }
+
+    public void setFqdn(String fqdn) {
+        this.fqdn = fqdn;
+    }
+
 }

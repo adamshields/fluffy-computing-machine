@@ -1,54 +1,53 @@
 package com.example.adam.controller;
 
-
+import com.example.adam.factory.ResourceFactoryConfigurer;
 import com.example.adam.model.Resource;
-import com.example.adam.model.factory.ResourceType;
-
-import com.example.adam.service.ResourceService;
+import com.example.adam.model.SAN;
+import com.example.adam.model.Server;
+import com.example.adam.repository.SANRepository;
+import com.example.adam.repository.ServerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
-
 @RestController
-@RequestMapping("v1/api/resources")
+@RequestMapping("v1/api/resource")
 public class ResourceController {
 
     @Autowired
-    private ResourceService resourceService;
+    private ResourceFactoryConfigurer resourceFactoryConfigurer;
 
-    @PostMapping("/{resourceType}")
-    public Resource createResource(@PathVariable ResourceType resourceType, @RequestBody Map<String, String> requestBody) {
-        String id = requestBody.get("id");
-        String hostname = requestBody.get("hostname");
-        String ip = requestBody.get("ip");
-        return resourceService.createResource(resourceType, id, hostname, ip);
+    @Autowired
+    private SANRepository sanRepository;
+
+    @Autowired
+    private ServerRepository serverRepository;
+
+    @PostMapping("/san")
+    public ResponseEntity<SAN> createSAN(@RequestBody SAN san) {
+        Resource resource = resourceFactoryConfigurer.getFactory("SANFactory").createResource();
+        SAN newSAN = (SAN) resource;
+        newSAN.setActiveRecord(san.isActiveRecord());
+        newSAN.setFriendlyName(san.getFriendlyName());
+        newSAN.setDiskSpeed(san.getDiskSpeed());
+        newSAN.setFqdn(san.getFqdn());
+        sanRepository.save(newSAN);
+        return new ResponseEntity<>(newSAN, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{resourceType}/{id}")
-    public Resource getResourceById(@PathVariable ResourceType resourceType, @PathVariable String id) {
-        return resourceService.getResourceById(resourceType, id);
-    }
-
-    @GetMapping("/{resourceType}")
-    public List<Resource> getAllResources(@PathVariable ResourceType resourceType) {
-        return resourceService.getAllResources(resourceType);
-    }
-
-    @PutMapping("/{resourceType}/{id}")
-    public Resource updateResource(@PathVariable ResourceType resourceType, @PathVariable String id, @RequestBody Resource updatedResource) {
-        return resourceService.updateResource(resourceType, id, updatedResource);
-    }
-
-    @DeleteMapping("/{resourceType}/{id}")
-    public void deleteResource(@PathVariable ResourceType resourceType, @PathVariable String id) {
-        resourceService.deleteResource(resourceType, id);
+    @PostMapping("/server")
+    public ResponseEntity<Server> createServer(@RequestBody Server server) {
+        Resource resource = resourceFactoryConfigurer.getFactory("ServerFactory").createResource();
+        Server newServer = (Server) resource;
+        newServer.setActiveRecord(server.isActiveRecord());
+        newServer.setHostname(server.getHostname());
+        newServer.setIpAddress(server.getIpAddress());
+        newServer.setFqdn(server.getFqdn());
+        serverRepository.save(newServer);
+        return new ResponseEntity<>(newServer, HttpStatus.CREATED);
     }
 }

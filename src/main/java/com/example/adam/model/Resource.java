@@ -1,63 +1,32 @@
 package com.example.adam.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.time.LocalDateTime;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import lombok.Data;
 
-@MappedSuperclass
+import javax.persistence.*;
+@Data
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Resource {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long id;
 
-    private String createdBy;
+    private boolean activeRecord;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    public boolean isActiveRecord() {
+        return activeRecord;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setActiveRecord(boolean activeRecord) {
+        this.activeRecord = activeRecord;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    private LocalDateTime createdDate;
-    private String lastModifiedBy;
-    private LocalDateTime lastModifiedDate;
-
-    public abstract void activeRecord();
-
-    // Getters and setters for the fields
 }

@@ -1,27 +1,18 @@
 package com.example.adam.model;
-
 import javax.persistence.Entity;
-
-import javax.persistence.Column;
 
 
 @Entity
 public class Server extends Resource {
 
-    @Column(nullable = false)
     private String hostname;
 
-    @Column(nullable = false)
-    private String ip;
 
-    public Server() {
-    }
+    private String ipAddress;
 
-    public Server(String id, String hostname, String ip) {
-        setId(id);
-        this.hostname = hostname;
-        this.ip = ip;
-    }
+
+    private String fqdn;
+
 
     public String getHostname() {
         return hostname;
@@ -31,17 +22,20 @@ public class Server extends Resource {
         this.hostname = hostname;
     }
 
-    public String getIp() {
-        return ip;
+    public String getIpAddress() {
+        return ipAddress;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 
-    @Override
-    public void activeRecord() {
-        // Implement the logic for activating the server
-        System.out.println("Activating server with hostname: " + hostname + " and IP: " + ip);
+    public String getFqdn() {
+        return fqdn;
     }
+
+    public void setFqdn(String fqdn) {
+        this.fqdn = fqdn;
+    }
+
 }
