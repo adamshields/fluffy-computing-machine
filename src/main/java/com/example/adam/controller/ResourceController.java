@@ -27,6 +27,40 @@ public class ResourceController {
     @Autowired
     private ServerRepository serverRepository;
 
+
+    //private ResponseEntity<SAN> createSAN(SAN san) {
+    //    Resource resource = resourceFactoryRegistry.getFactory("SANFactory").createResource();
+    //    SAN newSAN = (SAN) resource;
+    //    newSAN.setActiveRecord(san.isActiveRecord());
+    //    newSAN.setFriendlyName(san.getFriendlyName());
+    //    newSAN.setDiskSpeed(san.getDiskSpeed());
+    //    newSAN.setFqdn(san.getFqdn());
+    //    sanRepository.save(newSAN);
+    //    return new ResponseEntity<>(newSAN, HttpStatus.CREATED);
+    //}
+    //
+    //private ResponseEntity<Server> createServer(Server server) {
+    //    Resource resource = resourceFactoryRegistry.getFactory("ServerFactory").createResource();
+    //    Server newServer = (Server) resource;
+    //    newServer.setActiveRecord(server.isActiveRecord());
+    //    newServer.setHostname(server.getHostname());
+    //    newServer.setIpAddress(server.getIpAddress());
+    //    newServer.setFqdn(server.getFqdn());
+    //    serverRepository.save(newServer);
+    //    return new ResponseEntity<>(newServer, HttpStatus.CREATED);
+    //}
+    //
+    //@PostMapping("/{resourceType}")
+    //public ResponseEntity<?> createResource(@PathVariable String resourceType, @RequestBody Resource resource) {
+    //    switch (resourceType.toLowerCase()) {
+    //        case "san":
+    //            return createSAN((SAN) resource);
+    //        case "server":
+    //            return createServer((Server) resource);
+    //        default:
+    //            return ResponseEntity.badRequest().body("Invalid resource type");
+    //    }
+    //}
     @PostMapping("/san")
     public ResponseEntity<SAN> createSAN(@RequestBody SAN san) {
         Resource resource = resourceFactoryRegistry.getFactory("SANFactory").createResource();
