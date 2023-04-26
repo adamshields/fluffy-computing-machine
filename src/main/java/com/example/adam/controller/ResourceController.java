@@ -1,5 +1,7 @@
 package com.example.adam.controller;
 
+import com.example.adam.dto.ResourceRequest;
+
 import com.example.adam.factory.ResourceFactoryRegistry;
 import com.example.adam.model.Resource;
 import com.example.adam.model.SAN;
@@ -11,8 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
+
+//@Schema(hidden = true)
+//class ResourceWithoutType extends Resource {}
 
 @RestController
 @RequestMapping("v1/api/resource")
@@ -26,6 +30,51 @@ public class ResourceController {
 
     @Autowired
     private ServerRepository serverRepository;
+
+    @PostMapping("/{resourceType}")
+    public ResponseEntity<?> createResource(@PathVariable String resourceType, @RequestBody ResourceRequest resource) {
+        switch (resourceType.toLowerCase()) {
+            case "san":
+                SAN san = new SAN();
+                san.setFriendlyName(resource.getFriendlyName());
+                san.setDiskSpeed(resource.getDiskSpeed());
+                san.setFqdn(resource.getFqdn());
+                san.setActiveRecord(resource.isActiveRecord());
+                return createSAN(san);
+            case "server":
+                Server server = new Server();
+                server.setHostname(resource.getHostname());
+                server.setIpAddress(resource.getIpAddress());
+                server.setFqdn(resource.getFqdn());
+                server.setActiveRecord(resource.isActiveRecord());
+                return createServer(server);
+            default:
+                return ResponseEntity.badRequest().body("Invalid resource type");
+        }
+    }
+
+    private ResponseEntity<com.example.adam.model.SAN> createSAN(SAN san) {
+        Resource resource = resourceFactoryRegistry.getFactory("SANFactory").createResource();
+        com.example.adam.model.SAN newSAN = (com.example.adam.model.SAN) resource;
+        newSAN.setActiveRecord(san.isActiveRecord());
+        newSAN.setFriendlyName(san.getFriendlyName());
+        newSAN.setDiskSpeed(san.getDiskSpeed());
+        newSAN.setFqdn(san.getFqdn());
+        sanRepository.save(newSAN);
+        return new ResponseEntity<>(newSAN, HttpStatus.CREATED);
+    }
+
+    private ResponseEntity<com.example.adam.model.Server> createServer(Server server) {
+        Resource resource = resourceFactoryRegistry.getFactory("ServerFactory").createResource();
+        com.example.adam.model.Server newServer = (com.example.adam.model.Server) resource;
+        newServer.setActiveRecord(server.isActiveRecord());
+        newServer.setHostname(server.getHostname());
+        newServer.setIpAddress(server.getIpAddress());
+        newServer.setFqdn(server.getFqdn());
+        serverRepository.save(newServer);
+        return new ResponseEntity<>(newServer, HttpStatus.CREATED);
+    }
+
 
 
     //private ResponseEntity<SAN> createSAN(SAN san) {
@@ -61,29 +110,29 @@ public class ResourceController {
     //            return ResponseEntity.badRequest().body("Invalid resource type");
     //    }
     //}
-    @PostMapping("/san")
-    public ResponseEntity<SAN> createSAN(@RequestBody SAN san) {
-        Resource resource = resourceFactoryRegistry.getFactory("SANFactory").createResource();
-        SAN newSAN = (SAN) resource;
-        newSAN.setActiveRecord(san.isActiveRecord());
-        newSAN.setFriendlyName(san.getFriendlyName());
-        newSAN.setDiskSpeed(san.getDiskSpeed());
-        newSAN.setFqdn(san.getFqdn());
-        sanRepository.save(newSAN);
-        return new ResponseEntity<>(newSAN, HttpStatus.CREATED);
-    }
-
-    @PostMapping("/server")
-    public ResponseEntity<Server> createServer(@RequestBody Server server) {
-        Resource resource = resourceFactoryRegistry.getFactory("ServerFactory").createResource();
-        Server newServer = (Server) resource;
-        newServer.setActiveRecord(server.isActiveRecord());
-        newServer.setHostname(server.getHostname());
-        newServer.setIpAddress(server.getIpAddress());
-        newServer.setFqdn(server.getFqdn());
-        serverRepository.save(newServer);
-        return new ResponseEntity<>(newServer, HttpStatus.CREATED);
-    }
+    //@PostMapping("/san")
+    //public ResponseEntity<SAN> createSAN(@RequestBody SAN san) {
+    //    Resource resource = resourceFactoryRegistry.getFactory("SANFactory").createResource();
+    //    SAN newSAN = (SAN) resource;
+    //    newSAN.setActiveRecord(san.isActiveRecord());
+    //    newSAN.setFriendlyName(san.getFriendlyName());
+    //    newSAN.setDiskSpeed(san.getDiskSpeed());
+    //    newSAN.setFqdn(san.getFqdn());
+    //    sanRepository.save(newSAN);
+    //    return new ResponseEntity<>(newSAN, HttpStatus.CREATED);
+    //}
+    //
+    //@PostMapping("/server")
+    //public ResponseEntity<Server> createServer(@RequestBody Server server) {
+    //    Resource resource = resourceFactoryRegistry.getFactory("ServerFactory").createResource();
+    //    Server newServer = (Server) resource;
+    //    newServer.setActiveRecord(server.isActiveRecord());
+    //    newServer.setHostname(server.getHostname());
+    //    newServer.setIpAddress(server.getIpAddress());
+    //    newServer.setFqdn(server.getFqdn());
+    //    serverRepository.save(newServer);
+    //    return new ResponseEntity<>(newServer, HttpStatus.CREATED);
+    //}
 
     @GetMapping("/{resourceType}")
     public ResponseEntity<?> getAll(@PathVariable String resourceType) {
@@ -133,9 +182,9 @@ public class ResourceController {
     public ResponseEntity<?> update(@PathVariable String resourceType, @PathVariable Long id, @RequestBody Resource updatedResource) {
         switch (resourceType.toLowerCase()) {
             case "san":
-                return updateSAN(id, (SAN) updatedResource);
+                return updateSAN(id, (com.example.adam.model.SAN) updatedResource);
             case "server":
-                return updateServer(id, (Server) updatedResource);
+                return updateServer(id, (com.example.adam.model.Server) updatedResource);
             //case "ltm":
             //    return updateLTM(id, (LTM) updatedResource);
             default:
@@ -143,33 +192,33 @@ public class ResourceController {
         }
     }
 
-    private ResponseEntity<SAN> updateSAN(Long id, SAN updatedSAN) {
-        Optional<SAN> existingSAN = sanRepository.findById(id);
+    private ResponseEntity<com.example.adam.model.SAN> updateSAN(Long id, com.example.adam.model.SAN updatedSAN) {
+        Optional<com.example.adam.model.SAN> existingSAN = sanRepository.findById(id);
         if (existingSAN.isPresent()) {
-            SAN san = existingSAN.get();
+            com.example.adam.model.SAN san = existingSAN.get();
             // Update properties
             san.setFriendlyName(updatedSAN.getFriendlyName());
             san.setDiskSpeed(updatedSAN.getDiskSpeed());
             san.setFqdn(updatedSAN.getFqdn());
             san.setActiveRecord(updatedSAN.isActiveRecord());
 
-            SAN savedSAN = sanRepository.save(san);
+            com.example.adam.model.SAN savedSAN = sanRepository.save(san);
             return ResponseEntity.ok(savedSAN);
         }
         return ResponseEntity.notFound().build();
     }
 
-    private ResponseEntity<Server> updateServer(Long id, Server updatedServer) {
-        Optional<Server> existingServer = serverRepository.findById(id);
+    private ResponseEntity<com.example.adam.model.Server> updateServer(Long id, com.example.adam.model.Server updatedServer) {
+        Optional<com.example.adam.model.Server> existingServer = serverRepository.findById(id);
         if (existingServer.isPresent()) {
-            Server server = existingServer.get();
+            com.example.adam.model.Server server = existingServer.get();
             // Update properties
             server.setHostname(updatedServer.getHostname());
             server.setIpAddress(updatedServer.getIpAddress());
             server.setFqdn(updatedServer.getFqdn());
             server.setActiveRecord(updatedServer.isActiveRecord());
 
-            Server savedServer = serverRepository.save(server);
+            com.example.adam.model.Server savedServer = serverRepository.save(server);
             return ResponseEntity.ok(savedServer);
         }
         return ResponseEntity.notFound().build();
