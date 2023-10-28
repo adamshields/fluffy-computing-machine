@@ -1,8 +1,8 @@
 package com.example.adam.model;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Entity;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 
 @Entity

@@ -1,7 +1,7 @@
 package com.example.adam.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
 public class SAN extends Resource {

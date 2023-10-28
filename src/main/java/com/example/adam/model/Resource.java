@@ -1,10 +1,10 @@
 package com.example.adam.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.time.LocalDateTime;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class Resource {
