@@ -1,0 +1,10 @@
+package com.example.adam.repository;
+
+import com.example.adam.entity.Service;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ServiceRepository extends JpaRepository<Service, Long> {
+    List<Service> findByServerId(Long serverId);
+}

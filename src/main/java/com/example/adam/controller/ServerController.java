@@ -1,14 +1,16 @@
 package com.example.adam.controller;
 
-import com.example.adam.entity.Server;
+import com.example.adam.dto.ServerDTO;
+
 import com.example.adam.service.ServerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -25,15 +27,15 @@ public class ServerController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping("/server")
-    public ResponseEntity<Server> createServer(@Parameter(description = "Server to be created") @RequestBody Server server) {
-        Server createdServer = serverService.create(server);
+    public ResponseEntity<ServerDTO> createServer(@Parameter(description = "Server to be created") @RequestBody ServerDTO serverDTO) {
+        ServerDTO createdServer = serverService.create(serverDTO);
         return ResponseEntity.ok(createdServer);
     }
 
     @Operation(summary = "Get all servers")
     @GetMapping("/server")
-    public ResponseEntity<List<Server>> getAllServers() {
-        List<Server> servers = serverService.findAll();
+    public ResponseEntity<List<ServerDTO>> getAllServers() {
+        List<ServerDTO> servers = serverService.findAll();
         return ResponseEntity.ok(servers);
     }
 
@@ -43,16 +45,16 @@ public class ServerController {
             @ApiResponse(responseCode = "404", description = "Server not found")
     })
     @GetMapping("/server/{id}")
-    public ResponseEntity<Server> getServerById(@Parameter(description = "ID of the server to be obtained") @PathVariable Long id) {
-        Server server = serverService.findById(id);
+    public ResponseEntity<ServerDTO> getServerById(@Parameter(description = "ID of the server to be obtained") @PathVariable Long id) {
+        ServerDTO server = serverService.findById(id);
         return ResponseEntity.ok(server);
     }
 
     @Operation(summary = "Update an existing server")
     @PutMapping("/server/{id}")
-    public ResponseEntity<Server> updateServer(@Parameter(description = "ID of the server to be updated") @PathVariable Long id,
-                                               @Parameter(description = "Updated server object") @RequestBody Server server) {
-        Server updatedServer = serverService.update(id, server);
+    public ResponseEntity<ServerDTO> updateServer(@Parameter(description = "ID of the server to be updated") @PathVariable Long id,
+                                                  @Parameter(description = "Updated server object") @RequestBody ServerDTO serverDTO) {
+        ServerDTO updatedServer = serverService.update(id, serverDTO);
         return ResponseEntity.ok(updatedServer);
     }
 
